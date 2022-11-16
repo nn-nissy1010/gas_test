@@ -1,28 +1,14 @@
+name: Move new issues into プロジェクト名 (ここは好きに書いてください)
 on:
   issues:
-    types:
-      # Issue の新規作成や変更、ラベル追加を契機にする（ラベル削除は別に考える必要あり）
-      - opened
-      - edited
-      - labeled
-
-env:
-  GITHUB_TOKEN: ${{ secrets.YOUR_TOKEN }}
-  MUTATION: |
-    mutation($projectColumnId: ID!, $issueID: ID!) {
-      addProjectCard(input: {projectColumnId: $projectColumnId, contentId: $issueID}) {
-        projectColumn {
-          name
-        }
-      }
-    }
+    types: [opened]
 
 jobs:
-  my-kanban:
-    if: contains(github.event.issue.labels.*.name, 'Kubernetes') # 特定のラベルが付いている場合のみ
+  automate-project-columns:
     runs-on: ubuntu-latest
-    env:
-      PROJECT_COLUMN_ID: MDSOMEPROJECTCOLUMNID
     steps:
-      - run: gh api graphql -F "projectColumnId=$PROJECT_COLUMN_ID" -F 'issueID=${{ github.event.issue.node_id }}' -f query="$MUTATION"
-      
+      - uses: alex-page/github-project-automation-plus@v0.3.0
+        with:
+          project: プロジェクトの名前
+          column: カラム名
+          repo-token: ${{ secrets.GH_TOKEN }}
