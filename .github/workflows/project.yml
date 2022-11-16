@@ -1,4 +1,5 @@
-name: Move new issues into プロジェクト名 (ここは好きに書いてください)
+name: 'Automatically add issue to basebankdev project'
+
 on:
   issues:
     types: [opened]
@@ -7,7 +8,8 @@ jobs:
   automate-project-columns:
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.3.0
+      - name: Move issues into pj column
+        uses: alex-page/github-project-automation-plus@v0.2.4
         with:
           project: gas_test_project
           column: Todo
