@@ -6,7 +6,7 @@ env:
   PROJECT_OWNER: nn-nissy1010
   PROJECT_NUMBER: 1
   TARGET_LABEL: 'Todo'
-  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_DEMO }}
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
   manage_project:
     name: Projects (Beta) に登録する ジョブ
