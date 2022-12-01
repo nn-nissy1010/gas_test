@@ -1,22 +1,16 @@
-name: Issue 作成時に Projects (Beta) に登録する ワークフロー
+name: Add To GitHub projects
 on:
   issues:
-    types: [opened]
-env:
-  PROJECT_OWNER: nn-nissy1010
-  PROJECT_NUMBER: 6
-  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    types:
+      - opened # issueを登録した時
 jobs:
-  manage_project:
-    name: Projects (Beta) に登録する ジョブ
+  add-to-project:
+    name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-    - name: Add Issue to Project
-      id: add-issue-to-project
-      uses: monry/actions-add-issue-to-project@v1
-      with:
-        github-token: ${{ env.GITHUB_TOKEN }}
-        project-owner: ${{ env.PROJECT_OWNER }}
-        project-number: ${{ env.PROJECT_NUMBER }}
-        issue-id: ${{ github.event.issue.node_id }}
-        
+      - uses: actions/add-to-project@v0.3.0
+        with:
+          # https://github.com/orgs|users/<ownerName>/projects/<projectNumber>
+          project-url: https://github.com/orgs/yumemi/projects/1
+          # repo and projectのtokenが必要
+          github-token: ${{ env.GITHUB_TOKEN }}
