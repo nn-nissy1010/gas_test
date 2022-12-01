@@ -1,22 +1,24 @@
-name: Issue 作成時に Projects (Beta) に登録する ワークフロー
+name: Example
 on:
   issues:
     types: [opened]
 env:
   PROJECT_OWNER: nn-nissy1010
   PROJECT_NUMBER: 5
-  TARGET_LABEL: 'Todo'
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
-  manage_project:
-    name: Projects (Beta) に登録する ジョブ
+  example:
+    name: Example job
     runs-on: ubuntu-latest
     steps:
-    - name: Add Issue to Project
+    - uses: monry/add-issue-to-project@v1
       id: add-issue-to-project
-      uses: monry/actions-add-issue-to-project@v1
       with:
         github-token: ${{ env.GITHUB_TOKEN }}
         project-owner: ${{ env.PROJECT_OWNER }}
         project-number: ${{ env.PROJECT_NUMBER }}
         issue-id: ${{ github.event.issue.node_id }}
+    - name: Output result
+      run: |
+        echo '${{ steps.add-issue-to-project.outputs.added-project-item-id }}'
+        
